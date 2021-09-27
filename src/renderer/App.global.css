@@ -15,3 +15,7 @@ a {
   width: fit-content;
   margin: 10px;
 }
+#root,
+section.ant-layout.layout {
+  height: 100vh;
+}
