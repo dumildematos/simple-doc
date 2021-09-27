@@ -2,6 +2,7 @@ import React from 'react';
 import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import icon from '../../assets/icon.svg';
 import './App.global.css';
+import Login from './Login/Login';
 
 const Hello = () => {
   return (
@@ -43,8 +44,11 @@ const Hello = () => {
 export default function App() {
   return (
     <Router>
-      <Switch>
+      {/* <Switch>
         <Route path="/" component={Hello} />
+      </Switch> */}
+      <Switch>
+        <Route path="/" component={Login} />
       </Switch>
     </Router>
   );
