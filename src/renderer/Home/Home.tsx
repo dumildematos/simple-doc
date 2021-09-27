@@ -1,24 +1,38 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Avatar, Row, Col, Button } from 'antd';
+import {
+  Layout,
+  Menu,
+  Avatar,
+  Row,
+  Col,
+  Button,
+  Divider,
+  Radio,
+  Skeleton,
+  Card,
+  Modal,
+  Form,
+  Input,
+} from 'antd';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  AntDesignOutlined,
   AppstoreOutlined,
   MailOutlined,
   ContainerOutlined,
   DesktopOutlined,
   PieChartOutlined,
-  PoweroffOutlined,
-  DownloadOutlined,
+  TeamOutlined,
+  UnorderedListOutlined,
+  TableOutlined,
 } from '@ant-design/icons';
+import { FaUsers } from '@react-icons/all-files/fa/FaUsers';
+import { IoIosDocument } from '@react-icons/all-files/io/IoIosDocument';
 import styled from 'styled-components';
 
 const { Header, Sider, Content } = Layout;
-
+const { Meta } = Card;
+const { TextArea } = Input;
 const MainLayout = styled(Layout)`
   height: 100vh;
   .trigger {
@@ -55,9 +69,6 @@ const MainLayout = styled(Layout)`
   ul.ant-menu {
     background: var(--gray-1);
   }
-  .ant-menu.ant-menu-sub.ant-menu-inline {
-    /* background: red; */
-  }
   section.ant-layout {
     background: white;
   }
@@ -84,6 +95,29 @@ const MainLayout = styled(Layout)`
       color: var(--purple-1);
     }
   }
+  .btn-action {
+    background: var(--purple-1);
+    border: none;
+    color: #fff;
+  }
+  .cards-container {
+    overflow-x: hidden;
+    overflow-y: scrool;
+    .ant-card {
+      cursor: pointer;
+      border-bottom: 2px solid var(--purple-1);
+    }
+  }
+`;
+const ModalLayout = styled(Modal)`
+  .ant-modal-content {
+    .ant-modal-footer {
+      button.ant-btn.ant-btn-primary {
+        background-color: var(--purple-1);
+        border: none;
+      }
+    }
+  }
 `;
 const { SubMenu } = Menu;
 
@@ -91,11 +125,46 @@ export default function Home() {
   const [collapse, setCollapse] = useState({
     collapsed: false,
   });
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [form] = Form.useForm();
+  const teamArray = [
+    { id: 1, title: 'Here', desc: 'description' },
+    { id: 1, title: 'Here', desc: 'description' },
+    { id: 1, title: 'Here', desc: 'description' },
+    { id: 1, title: 'Here', desc: 'description' },
+    { id: 1, title: 'Here', desc: 'description' },
+    { id: 1, title: 'Here', desc: 'description' },
+    { id: 1, title: 'Here', desc: 'description' },
+    { id: 1, title: 'Here', desc: 'description' },
+  ];
 
   const toggle = () => {
     setCollapse({
       collapsed: !collapse.collapsed,
     });
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const onChangeInput = (e: any) => {
+    console.log(e);
+  };
+
+  const onCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const changeView = () => {};
+
+  const openGroup = () => {
+    console.log('clicked');
+  };
+
+  const onCreateGroup = (values: any) => {
+    console.log(values);
+    setIsModalVisible(false);
   };
 
   return (
@@ -162,13 +231,117 @@ export default function Home() {
               minHeight: 280,
             }}
           >
-            <Row>
-              <Col>
-                <Button type="primary" icon={<DownloadOutlined />} size="small">
-                  Novo
+            <Row justify="end">
+              <Col span={4}>
+                <Button
+                  icon={<TeamOutlined />}
+                  className="btn-action"
+                  onClick={showModal}
+                >
+                  Nova equipe
                 </Button>
               </Col>
+              <Divider />
             </Row>
+            <Row justify="end" style={{ padding: '0' }}>
+              <Col span={4} style={{ padding: '0' }}>
+                <Radio.Group value="large" onChange={changeView}>
+                  <Radio.Button value="large">
+                    <UnorderedListOutlined />
+                  </Radio.Button>
+                  <Radio.Button value="default">
+                    <TableOutlined />
+                  </Radio.Button>
+                </Radio.Group>
+              </Col>
+            </Row>
+            <Row
+              className="cards-container"
+              gutter={[8, 8]}
+              style={{ paddingTop: '10px' }}
+            >
+              {/* <div className="cards-container">teste</div> */}
+
+              {teamArray.map((item, index) => (
+                <Col order={index} key={index} span={8}>
+                  <Card
+                    style={{ width: '100%' }}
+                    actions={[
+                      // eslint-disable-next-line react/jsx-key
+                      [<FaUsers />, <span>46</span>],
+                      // eslint-disable-next-line react/jsx-key
+                      [<IoIosDocument />, <span>46</span>],
+                    ]}
+                    className="teams-card"
+                    onClick={openGroup()}
+                  >
+                    <Skeleton loading={false} active>
+                      <Meta
+                        title="Card title"
+                        description="This is the description"
+                      />
+                    </Skeleton>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+            <ModalLayout
+              visible={isModalVisible}
+              title="Create a new collection"
+              okText="Create"
+              cancelText="Cancel"
+              onCancel={onCancel}
+              onOk={() => {
+                form
+                  .validateFields()
+                  // eslint-disable-next-line promise/always-return
+                  .then((values) => {
+                    form.resetFields();
+                    onCreateGroup(values);
+                  })
+                  .catch((info) => {
+                    console.log('Validate Failed:', info);
+                  });
+              }}
+            >
+              <Form
+                form={form}
+                layout="vertical"
+                name="form_in_modal"
+                initialValues={{
+                  modifier: 'public',
+                }}
+              >
+                <Form.Item
+                  name="title"
+                  label="Nome da equipe"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input the title of collection!',
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name="description"
+                  label="Descrição"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input the title of collection!',
+                    },
+                  ]}
+                >
+                  <TextArea
+                    placeholder="textarea with clear icon"
+                    allowClear
+                    onChange={onChangeInput}
+                  />
+                </Form.Item>
+              </Form>
+            </ModalLayout>
           </Content>
         </Layout>
       </MainLayout>
