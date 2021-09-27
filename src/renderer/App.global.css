@@ -3,6 +3,27 @@
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
 @import 'antd/dist/antd.css';
+@font-face {
+  font-family: 'berlin-demi-bold';
+  src: url(../../assets/fonts/Berlin-Sans-FB-Demi-Bold/Berlin-Sans-FB-Demi-Bold.ttf);
+}
+@font-face {
+  font-family: 'berlin-regurlar';
+  src: url(../../assets/fonts/Berlin-Sans-FB-Regular/Berlin-Sans-FB-Regular.ttf);
+}
+@font-face {
+  font-family: 'candara';
+  src: url(../../assets/fonts/candara/Candara.ttf);
+}
+:root {
+  --BerninDemiBold: 'berlin-demi-bold';
+  --BerlinRegular: 'berlin-regurlar';
+  --candara: 'candara';
+
+  --purple-1: #4C5FE1;
+  --black-1: rgb(112, 112, 112);
+  --white-1: #F7F7F7;
+}
 * {
   margin: 0;
   padding: 0;
@@ -18,4 +39,5 @@ a {
 #root,
 section.ant-layout.layout {
   height: 100vh;
+  background-color: #F7F7F7;
 }
