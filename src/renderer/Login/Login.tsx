@@ -8,6 +8,7 @@ import {
   Button,
   Input,
   Checkbox,
+  Image,
 } from 'antd';
 import styled from '@xstyled/styled-components';
 import { FaLinkedinIn } from '@react-icons/all-files/fa/FaLinkedinIn';
@@ -44,7 +45,7 @@ const LoginBox = styled.divBox`
       }
     }
     .btnLogin {
-      background: linear-gradient(#6474e4, #4c5fe1) !important;
+      background: linear-gradient('#6474e4', '#4c5fe1') !important;
       border: none;
     }
     .social-login {
@@ -55,7 +56,7 @@ const LoginBox = styled.divBox`
         button {
           margin: 5px;
           border: none;
-          color: #F7F7F7;
+          color: '#F7F7F7';
           &:nth-child(1) {
             background-color: #0a66c2;
           }
@@ -286,7 +287,7 @@ export default function Login(props: any) {
                           takimata sanctus est Lorem ipsum dolor sit amet. Lorem
                           ipsum dolor sit amet, consetetur sadipscing elitr.
                         </p>
-                        <img src={folder1} width="200" />
+                        <Image src={folder1} width="200" />
                       </div>
                       <div>
                         <h3>2</h3>

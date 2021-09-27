@@ -20,9 +20,14 @@
   --BerlinRegular: 'berlin-regurlar';
   --candara: 'candara';
 
-  --purple-1: #4C5FE1;
+  --purple-1: #4c5fe1;
+  --purple-2: #cdd3f8c7;
+
   --black-1: rgb(112, 112, 112);
-  --white-1: #F7F7F7;
+  --white-1: #f7f7f7;
+
+  --gray-1: #f7f6f3;
+  --gray-2: #dad9d7;
 }
 * {
   margin: 0;
@@ -39,5 +44,5 @@ a {
 #root,
 section.ant-layout.layout {
   height: 100vh;
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
 }
