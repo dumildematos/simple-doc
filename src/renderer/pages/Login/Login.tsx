@@ -45,7 +45,7 @@ const LoginBox = styled.divBox`
       }
     }
     .btnLogin {
-      background: linear-gradient('#6474e4', '#4c5fe1') !important;
+      background: linear-gradient(var(--purple-3), var(--purple-1)) !important;
       border: none;
     }
     .social-login {
@@ -56,7 +56,7 @@ const LoginBox = styled.divBox`
         button {
           margin: 5px;
           border: none;
-          color: '#F7F7F7';
+          color: var(--white-1);
           &:nth-child(1) {
             background-color: #0a66c2;
           }

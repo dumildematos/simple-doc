@@ -1,8 +1,8 @@
 import React from 'react';
-import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.global.css';
-import Home from './Home/Home';
-import Login from './Login/Login';
+import Home from './pages/Home/Home';
+import Login from './pages/Login/Login';
+import { MainContextProvider } from './contexts/MainContext';
 
 const hasValidToken = true;
 
@@ -11,13 +11,8 @@ export default function App() {
     return <Login />;
   }
   return (
-    <Router>
-      {/* <Switch>
-          <Route path="/" component={Hello} />
-        </Switch> */}
-      <Switch>
-        <Route path="/" component={Home} />
-      </Switch>
-    </Router>
+    <MainContextProvider>
+      <Home />
+    </MainContextProvider>
   );
 }
