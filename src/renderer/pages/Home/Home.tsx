@@ -1,49 +1,18 @@
-import React, { useContext, useState } from 'react';
-import {
-  Layout,
-  Menu,
-  Avatar,
-  Row,
-  Col,
-  Button,
-  Divider,
-  Radio,
-  Skeleton,
-  Card,
-  Modal,
-  Form,
-  Input,
-  Tag,
-  PageHeader,
-} from 'antd';
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  AppstoreOutlined,
-  MailOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UnorderedListOutlined,
-  TableOutlined,
-  PlusOutlined,
-  LoginOutlined,
-} from '@ant-design/icons';
-import { FaUsers } from '@react-icons/all-files/fa/FaUsers';
-import { IoIosDocument } from '@react-icons/all-files/io/IoIosDocument';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Layout, PageHeader } from 'antd';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import Sidemenu from 'renderer/components/Sidemenu/Sidemenu';
 import { MainContext } from 'renderer/contexts/MainContext';
 import Groups from '../Groups/Groups';
 import Group from '../Group/Group';
 
-const { Header, Sider, Content } = Layout;
-const { Meta } = Card;
-const { TextArea } = Input;
+const { Header, Content } = Layout;
+let inPage = false;
 const MainLayout = styled(Layout)`
   height: 100vh;
+  padding: 0;
   .trigger {
     padding: 0 24px;
     font-size: 18px;
@@ -80,6 +49,7 @@ const MainLayout = styled(Layout)`
   }
   section.ant-layout {
     background: white;
+    ${!inPage ? `background: white` : `background: red`}
   }
   .site-layout .site-layout-background {
     background: #fff;
@@ -128,10 +98,12 @@ const MainLayout = styled(Layout)`
   }
 `;
 
-let input;
 export default function Home() {
   const { isRouted, defineRoutedState, groupPage } = useContext(MainContext);
-
+  useEffect(() => {
+    inPage = isRouted;
+    console.log(inPage);
+  }, [inPage, isRouted, MainLayout]);
   const [collapse, setCollapse] = useState({
     collapsed: false,
   });
@@ -147,23 +119,6 @@ export default function Home() {
   const toggle = () => {
     setCollapse({
       collapsed: !collapse.collapsed,
-    });
-  };
-
-  const showInput = () => {
-    // setHash({ inputVisible: true }, () => input.focus());
-  };
-
-  const saveInputRef = (inp: any) => {
-    // eslint-disable-next-line no-param-reassign
-    input = inp;
-  };
-
-  const handleInputChange = (e: { target: { value: any } }) => {
-    setHash({
-      tags: hashes.tags,
-      inputValue: e.target.value,
-      inputVisible: hashes.inputVisible,
     });
   };
 
@@ -188,7 +143,10 @@ export default function Home() {
     <>
       <MainLayout>
         <Sidemenu collapse={collapse} />
-        <Layout className="site-layout">
+        <Layout
+          className="site-layout"
+          style={{ padding: 0, background: !isRouted ? 'white' : 'inherit' }}
+        >
           <Header
             className="site-layout-background nav"
             style={{
@@ -220,9 +178,10 @@ export default function Home() {
           <Content
             className="site-layout-background"
             style={{
-              margin: '24px 16px',
-              padding: 24,
+              margin: '60px 16px 15px 16px',
+              padding: !isRouted ? 24 : 0,
               minHeight: 280,
+              background: !isRouted ? 'inherit' : 'transparent',
             }}
           >
             <Router>
