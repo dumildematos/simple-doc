@@ -1,22 +1,68 @@
 import React from 'react';
-import { Avatar, Layout, Menu } from 'antd';
+import { Avatar, Dropdown, Layout, Menu } from 'antd';
 import {
   AppstoreOutlined,
   ContainerOutlined,
   DesktopOutlined,
+  DownOutlined,
   MailOutlined,
   PieChartOutlined,
 } from '@ant-design/icons';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
+
+const MenuDropDown = (
+  <Menu>
+    <Menu.Item>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.antgroup.com"
+      >
+        1st menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item icon={<DownOutlined />} disabled>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.aliyun.com"
+      >
+        2nd menu item (disabled)
+      </a>
+    </Menu.Item>
+    <Menu.Item disabled>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.luohanacademy.com"
+      >
+        3rd menu item (disabled)
+      </a>
+    </Menu.Item>
+    <Menu.Item danger>a danger item</Menu.Item>
+  </Menu>
+);
+
 export default function Sidemenu(props: any) {
   return (
     // eslint-disable-next-line react/destructuring-assignment
     <Sider trigger={null} collapsible collapsed={props.collapse.collapsed}>
       <div className="logo">
         <Avatar src="https://avatars.githubusercontent.com/u/10828841?s=400&u=56ba8276db1da2bc8dfee5532e0a677d40916b9e&v=4" />
-        {!props.collapse.collapsed ? <p>Dumilde Matos</p> : ''}
+        {!props.collapse.collapsed ? (
+          <Dropdown overlay={MenuDropDown}>
+            <a
+              className="ant-dropdown-link"
+              onClick={(e) => e.preventDefault()}
+            >
+              Dumilde Matos <DownOutlined />
+            </a>
+          </Dropdown>
+        ) : (
+          ''
+        )}
       </div>
       <Menu
         defaultSelectedKeys={['1']}

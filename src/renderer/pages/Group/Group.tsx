@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Avatar, Button, Card, Col, Row, Tooltip } from 'antd';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { BsPencil } from '@react-icons/all-files/bs/BsPencil';
 import { HiOutlineDocumentAdd } from '@react-icons/all-files/hi/HiOutlineDocumentAdd';
 import { IoIosDocument } from '@react-icons/all-files/io/IoIosDocument';
 import { AntDesignOutlined, FileFilled, UserOutlined } from '@ant-design/icons';
+import { MainContext } from 'renderer/contexts/MainContext';
 
 const { Meta } = Card;
-
 
 const GroupContainer = styled.div`
   /* background: red !important; */
@@ -33,7 +33,9 @@ const GroupContainer = styled.div`
       }
       &.doc-ls {
         padding: 0;
-        border: 1px solid var(--purple-1);
+        .ant-card {
+          border: 1px solid var(--purple-1);
+        }
         .doc-item {
           background-color: blue;
           display: flex;
@@ -55,6 +57,12 @@ const GroupContainer = styled.div`
 
 function Group(props: any) {
   // eslint-disable-next-line react/destructuring-assignment
+  const { definedEditorIsOpened } = useContext(MainContext);
+  const openDocument = () => {
+    console.log(2);
+    definedEditorIsOpened(true);
+  };
+
   return (
     <GroupContainer>
       <Row justify="space-between" className="main">
@@ -115,18 +123,14 @@ function Group(props: any) {
           </Row>
           <Row>
             <Col span={8} className="doc-ls">
-              {/* <div className="doc-item">
-                <div className="square">
-                  <IoIosDocument />
-                </div>
-              </div>
-              <div className="doc-item">documento.pdf</div> */}
-              <Card style={{ width: 208 }}>
-                <Meta
-                  avatar={<Avatar icon={<FileFilled />} />}
-                  title="Card title"
-                />
-              </Card>
+              <Link to={`/document/${1}`} onClick={() => openDocument()}>
+                <Card style={{ width: '100%' }}>
+                  <Meta
+                    avatar={<Avatar icon={<FileFilled />} />}
+                    title="Card title"
+                  />
+                </Card>
+              </Link>
             </Col>
           </Row>
         </Col>

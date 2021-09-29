@@ -7,6 +7,7 @@ import Sidemenu from 'renderer/components/Sidemenu/Sidemenu';
 import { MainContext } from 'renderer/contexts/MainContext';
 import Groups from '../Groups/Groups';
 import Group from '../Group/Group';
+import Editor from '../Editor/Editor';
 
 const { Header, Content } = Layout;
 let inPage = false;
@@ -145,7 +146,7 @@ export default function Home() {
         <Sidemenu collapse={collapse} />
         <Layout
           className="site-layout"
-          style={{ padding: 0, background: !isRouted ? 'white' : 'inherit' }}
+          style={{ padding: 0, background: 'inherit' }}
         >
           <Header
             className="site-layout-background nav"
@@ -189,6 +190,7 @@ export default function Home() {
               <Switch>
                 {/* <Route exact path="/" component={Groups} /> */}
                 {isRouted && <Route path="/group/:id" component={Group} />}
+                <Route path="/document/:id" component={Editor} />
               </Switch>
             </Router>
           </Content>
