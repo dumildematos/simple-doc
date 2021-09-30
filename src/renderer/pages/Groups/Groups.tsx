@@ -11,6 +11,9 @@ import {
   Skeleton,
   Modal,
   Layout,
+  Tag,
+  Space,
+  Table,
 } from 'antd';
 import {
   TeamOutlined,
@@ -56,6 +59,104 @@ const ModalLayout = styled(Modal)`
   }
 `;
 
+const tableColumns = [
+  {
+    title: 'Name',
+    dataIndex: 'title',
+    key: 'title',
+    // eslint-disable-next-line react/display-name
+    render: (
+      text:
+        | boolean
+        | React.ReactChild
+        | React.ReactFragment
+        | React.ReactPortal
+        | null
+        | undefined
+      // eslint-disable-next-line jsx-a11y/anchor-is-valid
+    ) => <a>{text}</a>,
+  },
+  {
+    title: 'Membros',
+    dataIndex: 'menbers',
+    key: 'menbers',
+  },
+  {
+    title: 'Documentos',
+    dataIndex: 'docs',
+    key: 'docs',
+  },
+  // {
+  //   title: 'Tags',
+  //   key: 'tags',
+  //   dataIndex: 'tags',
+  //   render: (tags: any[]) => (
+  //     <>
+  //       {tags.map((tag: React.Key | null | undefined) => {
+  //         let color = tag.length > 5 ? 'geekblue' : 'green';
+  //         if (tag === 'loser') {
+  //           color = 'volcano';
+  //         }
+  //         return (
+  //           <Tag color={color} key={tag}>
+  //             {tag.toUpperCase()}
+  //           </Tag>
+  //         );
+  //       })}
+  //     </>
+  //   ),
+  // },
+  {
+    title: 'Action',
+    key: 'action',
+    render: (
+      text: any,
+      record: {
+        name:
+          | string
+          | number
+          | boolean
+          | {}
+          | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+          | React.ReactNodeArray
+          | React.ReactPortal
+          | null
+          | undefined;
+      }
+    ) => (
+      <Space size="middle">
+        <a>Invite {record.name}</a>
+        <a>Delete</a>
+      </Space>
+    ),
+  },
+];
+
+const data = [
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+    tags: ['nice', 'developer'],
+    membros: 12,
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+    tags: ['loser'],
+  },
+  {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park',
+    tags: ['cool', 'teacher'],
+  },
+];
+
 export default function Groups({ theme }) {
   const { isRouted, defineRoutedState, definePageInfo } =
     useContext(MainContext);
@@ -100,6 +201,7 @@ export default function Groups({ theme }) {
   }, []);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [viewAs, setChangeView] = useState('grid');
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -113,7 +215,9 @@ export default function Groups({ theme }) {
     setIsModalVisible(false);
   };
 
-  const changeView = () => {};
+  const onChangeView = (e: any) => {
+    setChangeView(e.target.value);
+  };
 
   const onCreateGroup = (values: any) => {
     console.log(values);
@@ -142,42 +246,51 @@ export default function Groups({ theme }) {
       </Row>
       <Row justify="end" style={{ padding: '0' }}>
         <Col span={4} style={{ padding: '0' }}>
-          <Radio.Group value="large" onChange={changeView}>
-            <Radio.Button value="large">
-              <UnorderedListOutlined />
-            </Radio.Button>
-            <Radio.Button value="default">
+          <Radio.Group value={viewAs} onChange={onChangeView}>
+            <Radio.Button value="grid">
               <TableOutlined />
+            </Radio.Button>
+            <Radio.Button value="list">
+              <UnorderedListOutlined />
             </Radio.Button>
           </Radio.Group>
         </Col>
       </Row>
-      <Row
-        className="cards-container"
-        gutter={[8, 8]}
-        style={{ paddingTop: '10px' }}
-      >
-        {teamArray.map((item, index) => (
-          <Col key={item.id} span={8}>
-            <Link to={`/group/${item.id}`} onClick={() => setRoutState(item)}>
-              <Card
-                style={{ width: '100%' }}
-                actions={[
-                  // eslint-disable-next-line react/jsx-key
-                  [<FaUsers />, <span>{item.menbers}</span>],
-                  // eslint-disable-next-line react/jsx-key
-                  [<IoIosDocument />, <span>{item.docs}</span>],
-                ]}
-                className="teams-card"
-              >
-                <Skeleton loading={false} active>
-                  <Meta title={item.title} description={item.desc} />
-                </Skeleton>
-              </Card>
-            </Link>
+      {viewAs === 'grid' && (
+        <Row
+          className="cards-container"
+          gutter={[8, 8]}
+          style={{ paddingTop: '10px' }}
+        >
+          {teamArray.map((item, index) => (
+            <Col key={item.id} span={8}>
+              <Link to={`/group/${item.id}`} onClick={() => setRoutState(item)}>
+                <Card
+                  style={{ width: '100%' }}
+                  actions={[
+                    // eslint-disable-next-line react/jsx-key
+                    [<FaUsers />, <span>{item.menbers}</span>],
+                    // eslint-disable-next-line react/jsx-key
+                    [<IoIosDocument />, <span>{item.docs}</span>],
+                  ]}
+                  className="teams-card"
+                >
+                  <Skeleton loading={false} active>
+                    <Meta title={item.title} description={item.desc} />
+                  </Skeleton>
+                </Card>
+              </Link>
+            </Col>
+          ))}
+        </Row>
+      )}
+      {viewAs === 'list' && (
+        <Row className="cards-container" style={{ paddingTop: '10px' }}>
+          <Col span={24}>
+            <Table columns={tableColumns} dataSource={teamArray} />
           </Col>
-        ))}
-      </Row>
+        </Row>
+      )}
       <ModalLayout
         theme={theme}
         visible={isModalVisible}
