@@ -20,7 +20,7 @@ const GroupContainer = styled.div`
     }
     .ant-col {
       border-radius: 3px;
-      background: white;
+      background: ${props => props.theme.cardGroupBg};
       &.main {
         height: 100%;
       }
@@ -66,9 +66,9 @@ function Group(props: any) {
     const urlDocPage = `/page-doc/${id}`;
     history.push(urlDocPage);
   };
-
+  // console.log(props.theme)
   return (
-    <GroupContainer>
+    <GroupContainer theme={props.theme}>
       <Row justify="space-between" className="main">
         <Col span={8} className="main">
           <Row justify="space-between" style={{ height: 'auto' }}>
@@ -127,7 +127,7 @@ function Group(props: any) {
           </Row>
           <Row>
             <Col span={8} className="doc-ls">
-              <Link to={`/page-doc/${2}`} onClick={() => openDocument(2)}> ir
+              <Link to={`/page-doc/${2}`} onClick={() => openDocument(2)}>
                 <Card style={{ width: '100%' }}>
                   <Meta
                     avatar={<Avatar icon={<FileFilled />} />}

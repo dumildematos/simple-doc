@@ -8,9 +8,17 @@ import {
   MailOutlined,
   PieChartOutlined,
 } from '@ant-design/icons';
+import styled from 'styled-components';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
+
+const Aside = styled.aside`
+  height: 100vh;
+  aside.ant-layout-sider.ant-layout-sider-dark {
+    height: 100vh;
+  }
+`;
 
 const MenuDropDown = (
   <Menu>

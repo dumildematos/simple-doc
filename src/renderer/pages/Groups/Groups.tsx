@@ -28,7 +28,26 @@ const { TextArea } = Input;
 
 const ModalLayout = styled(Modal)`
   .ant-modal-content {
+    background: ${(props) => props.theme.modalAddGroupBg};
+    .ant-modal-header {
+      background: ${(props) => props.theme.modalAddGroupBg};
+      border-color: ${(props) => props.theme.cardInnerBorderColor};
+      .ant-modal-title {
+        color: ${(props) => props.theme.modalInputColor} !important;
+      }
+    }
+    .ant-modal-body {
+      label {
+        color: ${(props) => props.theme.modalInputColor} !important;
+      }
+      .ant-input {
+        background: ${(props) => props.theme.modalBgInput} !important;
+        border: ${(props) => props.theme.modalInputBorder};
+        color: ${(props) => props.theme.modalInputColor} !important;
+      }
+    }
     .ant-modal-footer {
+      border-color: ${(props) => props.theme.cardInnerBorderColor};
       button.ant-btn.ant-btn-primary {
         background-color: var(--purple-1);
         border: none;
@@ -37,7 +56,7 @@ const ModalLayout = styled(Modal)`
   }
 `;
 
-export default function Groups() {
+export default function Groups({ theme }) {
   const { isRouted, defineRoutedState, definePageInfo } =
     useContext(MainContext);
   const [form] = Form.useForm();
@@ -160,6 +179,7 @@ export default function Groups() {
         ))}
       </Row>
       <ModalLayout
+        theme={theme}
         visible={isModalVisible}
         title="Create a new collection"
         okText="Create"

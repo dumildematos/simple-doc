@@ -36,7 +36,7 @@ export function MainContextProvider({ children }: Node) {
 
   useEffect(() => {
     console.log({ editorOpened, isRouted });
-  }, [editorOpened, isRouted]);
+  }, [editorOpened, isRouted, theme]);
 
   const defineRoutedState = (state: boolean) => {
     setRouted(state);
