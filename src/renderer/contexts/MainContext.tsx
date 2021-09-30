@@ -9,9 +9,15 @@ type Page = {
   isRouted: boolean;
   groupPage: any;
   editorOpened: boolean;
+  visibleDocSidebar: boolean;
+  currentPath: string;
+  theme: string;
   defineRoutedState: (state: boolean) => void;
   definePageInfo: (data: any) => void;
   definedEditorIsOpened: (state: boolean) => void;
+  defineDocSideBar: (state: boolean) => void;
+  defineCurrentPath: (path: string) => void;
+  defineTheme: (name: string) => void;
 };
 
 type Node = {
@@ -24,8 +30,13 @@ export function MainContextProvider({ children }: Node) {
   const [isRouted, setRouted] = useState(false);
   const [groupPage, setGroupPage] = useState({});
   const [editorOpened, setOpenedEditor] = useState(false);
+  const [visibleDocSidebar, setVisibleDocSidebar] = useState(false);
+  const [currentPath, setCurrentPath] = useState('');
+  const [theme, setTheme] = useState('light');
 
-  useEffect(() => {}, [editorOpened]);
+  useEffect(() => {
+    console.log({ editorOpened, isRouted });
+  }, [editorOpened, isRouted]);
 
   const defineRoutedState = (state: boolean) => {
     setRouted(state);
@@ -39,6 +50,18 @@ export function MainContextProvider({ children }: Node) {
     setOpenedEditor(state);
   };
 
+  const defineDocSideBar = (state: boolean) => {
+    setVisibleDocSidebar(state);
+  };
+
+  const defineCurrentPath = (path: string) => {
+    setCurrentPath(path);
+  };
+
+  const defineTheme = (name: string) => {
+    setTheme(name);
+  };
+
   return (
     <MainContext.Provider
       value={{
@@ -48,6 +71,12 @@ export function MainContextProvider({ children }: Node) {
         definePageInfo,
         editorOpened,
         definedEditorIsOpened,
+        visibleDocSidebar,
+        defineDocSideBar,
+        currentPath,
+        defineCurrentPath,
+        theme,
+        defineTheme,
       }}
     >
       {children}

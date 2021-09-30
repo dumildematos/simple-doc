@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { withRouter } from 'react-router';
 import {
   Affix,
   Button,
@@ -19,8 +20,6 @@ import styled from 'styled-components';
 import Sidemenu from 'renderer/components/Sidemenu/Sidemenu';
 import { MainContext } from 'renderer/contexts/MainContext';
 import Chat from 'renderer/components/Chat/Chat';
-import Groups from '../Groups/Groups';
-import Group from '../Group/Group';
 
 const { Header, Content } = Layout;
 let inPage = false;
@@ -118,8 +117,7 @@ const DescriptionItem = ({ title, content }) => (
     {content}
   </div>
 );
-
-export default function Home() {
+function EditableDocPage() {
   const {
     isRouted,
     defineRoutedState,
@@ -180,7 +178,6 @@ export default function Home() {
   return (
     <>
       <MainLayout>
-        <Sidemenu collapse={collapse} />
         <Layout
           className="site-layout"
           style={{ padding: 0, background: 'inherit' }}
@@ -201,19 +198,17 @@ export default function Home() {
                 onClick: toggle,
               }
             )}
-            {isRouted && (
-              <PageHeader
-                className="site-page-header"
-                onBack={() => {
-                  // window.history.back();
-                  defineRoutedState(false);
-                  definedEditorIsOpened(false);
-                  history.push('/');
-                }}
-                title={groupPage.title}
-                // subTitle="This is a subtitle"
-              />
-            )}
+            <PageHeader
+              className="site-page-header"
+              onBack={() => {
+                // window.history.back();
+                defineRoutedState(false);
+                definedEditorIsOpened(false);
+                history.push('/');
+              }}
+              title={'Voltar'}
+              // subTitle="This is a subtitle"
+            />
           </Header>
           <Content
             className="site-layout-background"
@@ -224,8 +219,6 @@ export default function Home() {
               background: !isRouted ? 'inherit' : 'transparent',
             }}
           >
-            {!isRouted && <Groups />}
-            {isRouted && !editorOpened && <Group />}
             {editorOpened && (
               <Affix style={{ position: 'absolute', top: '50%', right: '0' }}>
                 <Button type="primary" size="small" onClick={showDrawer}>
@@ -297,3 +290,5 @@ export default function Home() {
     </>
   );
 }
+
+export default withRouter(EditableDocPage);

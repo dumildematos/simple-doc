@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import { Avatar, Button, Card, Col, Row, Tooltip } from 'antd';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useHistory, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { BsPencil } from '@react-icons/all-files/bs/BsPencil';
 import { HiOutlineDocumentAdd } from '@react-icons/all-files/hi/HiOutlineDocumentAdd';
-import { IoIosDocument } from '@react-icons/all-files/io/IoIosDocument';
 import { AntDesignOutlined, FileFilled, UserOutlined } from '@ant-design/icons';
 import { MainContext } from 'renderer/contexts/MainContext';
 
@@ -58,9 +57,14 @@ const GroupContainer = styled.div`
 function Group(props: any) {
   // eslint-disable-next-line react/destructuring-assignment
   const { definedEditorIsOpened } = useContext(MainContext);
-  const openDocument = () => {
-    console.log(2);
+
+  const history = useHistory();
+
+  const openDocument = (id: number) => {
+    // console.log(2);
     definedEditorIsOpened(true);
+    const urlDocPage = `/page-doc/${id}`;
+    history.push(urlDocPage);
   };
 
   return (
@@ -123,7 +127,7 @@ function Group(props: any) {
           </Row>
           <Row>
             <Col span={8} className="doc-ls">
-              <Link to={`/document/${1}`} onClick={() => openDocument()}>
+              <Link to={`/page-doc/${2}`} onClick={() => openDocument(2)}> ir
                 <Card style={{ width: '100%' }}>
                   <Meta
                     avatar={<Avatar icon={<FileFilled />} />}
