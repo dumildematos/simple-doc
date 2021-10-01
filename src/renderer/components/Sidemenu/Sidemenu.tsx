@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Dropdown, Layout, Menu } from 'antd';
+import { Avatar, Divider, Dropdown, Layout, Menu } from 'antd';
 import {
   AppstoreOutlined,
   ContainerOutlined,
@@ -7,18 +7,12 @@ import {
   DownOutlined,
   MailOutlined,
   PieChartOutlined,
+  SettingFilled,
 } from '@ant-design/icons';
 import styled from 'styled-components';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
-
-const Aside = styled.aside`
-  height: 100vh;
-  aside.ant-layout-sider.ant-layout-sider-dark {
-    height: 100vh;
-  }
-`;
 
 const MenuDropDown = (
   <Menu>
@@ -49,7 +43,9 @@ const MenuDropDown = (
         3rd menu item (disabled)
       </a>
     </Menu.Item>
-    <Menu.Item danger>a danger item</Menu.Item>
+    <Menu.Item icon={<SettingFilled />}>Configurações</Menu.Item>
+    <Divider style={{ padding: 0 }} />
+    <Menu.Item>Terminar Sessão</Menu.Item>
   </Menu>
 );
 

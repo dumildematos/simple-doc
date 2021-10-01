@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Layout, PageHeader } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
 import Sidemenu from 'renderer/components/Sidemenu/Sidemenu';
 import { MainContext } from 'renderer/contexts/MainContext';
+import { useTranslation } from 'react-i18next';
 import Groups from '../Groups/Groups';
 import Group from '../Group/Group';
 import MainLayout from '../../components/MainLayout/MainLayout';
@@ -19,6 +19,11 @@ const DescriptionItem = ({ title, content }) => (
   </div>
 );
 
+const lngs = {
+  en: { nativeName: 'English' },
+  de: { nativeName: 'Deutsch' },
+};
+
 export default function Home({ theme }) {
   const {
     isRouted,
@@ -28,6 +33,8 @@ export default function Home({ theme }) {
     defineDocSideBar,
     definedEditorIsOpened,
   } = useContext(MainContext);
+  const { t, i18n } = useTranslation();
+  const [count, setCounter] = useState(0);
   useEffect(() => {
     inPage = isRouted;
     // console.log(inPage);
@@ -114,6 +121,21 @@ export default function Home({ theme }) {
                   // subTitle="This is a subtitle"
                 />
               )}
+              {t('description.part2')}
+
+              <div>
+          {Object.keys(lngs).map((lng) => (
+            <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => {
+              i18n.changeLanguage(lng);
+              setCounter(count + 1);
+            }}>
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+        </div>
+        <p>
+          <i>{t('counter', { count })}</i>
+        </p>
             </Header>
             <Content
               className="site-layout-background"
