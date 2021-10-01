@@ -35,6 +35,7 @@ export default function Home({ theme }) {
   } = useContext(MainContext);
   const { t, i18n } = useTranslation();
   const [count, setCounter] = useState(0);
+  // i18n.changeLanguage('en');
   useEffect(() => {
     inPage = isRouted;
     // console.log(inPage);
@@ -123,7 +124,7 @@ export default function Home({ theme }) {
               )}
               {t('description.part2')}
 
-              <div>
+              {/* <div>
           {Object.keys(lngs).map((lng) => (
             <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => {
               i18n.changeLanguage(lng);
@@ -135,7 +136,7 @@ export default function Home({ theme }) {
         </div>
         <p>
           <i>{t('counter', { count })}</i>
-        </p>
+        </p> */}
             </Header>
             <Content
               className="site-layout-background"
@@ -146,7 +147,7 @@ export default function Home({ theme }) {
                 // background: !isRouted ? 'theme.boxBg' : 'transparent',
               }}
             >
-              {!isRouted && <Groups theme={theme} />}
+              {!isRouted && <Groups t={t} theme={theme} />}
               {isRouted && !editorOpened && <Group />}
             </Content>
           </Layout>

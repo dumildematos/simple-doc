@@ -6,13 +6,17 @@ import Backend from 'i18next-http-backend';
 import { DateTime } from 'luxon';
 import translationEN from './en/en.json';
 import translationDE from './de/de.json';
+import translationPT from './pt/pt.json';
 
 const resources = {
   en: {
     translation: translationEN,
   },
-  de: {
-    translation: translationDE,
+  // de: {
+  //   translation: translationDE,
+  // },
+  pt: {
+    translation: translationPT,
   },
 };
 

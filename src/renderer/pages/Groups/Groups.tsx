@@ -157,7 +157,7 @@ const data = [
   },
 ];
 
-export default function Groups({ theme }) {
+export default function Groups({ theme, t }) {
   const { isRouted, defineRoutedState, definePageInfo } =
     useContext(MainContext);
   const [form] = Form.useForm();
@@ -239,7 +239,7 @@ export default function Groups({ theme }) {
             className="btn-action"
             onClick={showModal}
           >
-            Nova equipe
+            {t('home.new_team')}
           </Button>
         </Col>
         <Divider />

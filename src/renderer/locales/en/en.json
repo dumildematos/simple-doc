@@ -10,5 +10,9 @@
     "date_morning": "Good morning! Today is {{date, DATE_HUGE}} | Have a nice day!",
     "date_afternoon": "Good afternoon! It\n's {{date, DATE_HUGE}}",
     "date_evening": "Good evening! Today was the {{date, DATE_HUGE}}"
+  },
+
+  "home": {
+    "new_team": "New Team"
   }
 }
