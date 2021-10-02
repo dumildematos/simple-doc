@@ -15,6 +15,14 @@
   "home": {
     "new_team": "New Team",
     "logout": "Logout",
-    "settings": "Settings"
+    "settings": {
+      "setting": "Settings",
+      "general": "Gerenal",
+      "theme": {
+        "title": "Theme",
+        "light": "Ligth",
+        "dark": "Dark"
+      }
+    }
   }
 }

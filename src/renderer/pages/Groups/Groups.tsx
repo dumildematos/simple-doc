@@ -14,26 +14,30 @@ import {
   Tag,
   Space,
   Table,
+  Popover,
 } from 'antd';
 import {
   TeamOutlined,
   UnorderedListOutlined,
   TableOutlined,
+  SettingOutlined,
+  SmileOutlined,
 } from '@ant-design/icons';
 import { FaUsers } from '@react-icons/all-files/fa/FaUsers';
 import { IoIosDocument } from '@react-icons/all-files/io/IoIosDocument';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { MainContext } from 'renderer/contexts/MainContext';
+import Picker from 'emoji-picker-react';
 
 const { Meta } = Card;
 const { TextArea } = Input;
 
 const ModalLayout = styled(Modal)`
   .ant-modal-content {
-    background: ${(props) => props.theme.modalAddGroupBg};
+    background: ${(props) => props.theme.modalBg};
     .ant-modal-header {
-      background: ${(props) => props.theme.modalAddGroupBg};
+      background: ${(props) => props.theme.modalBg};
       border-color: ${(props) => props.theme.cardInnerBorderColor};
       .ant-modal-title {
         color: ${(props) => props.theme.modalInputColor} !important;
@@ -195,13 +199,15 @@ export default function Groups({ theme, t }) {
       teamUrl: '/teste',
     },
   ];
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [viewAs, setChangeView] = useState('grid');
+  const [chosenEmoji, setChosenEmoji] = useState(null);
+
 
   useEffect(() => {
     // anchorRef();
   }, []);
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [viewAs, setChangeView] = useState('grid');
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -229,6 +235,35 @@ export default function Groups({ theme, t }) {
     defineRoutedState(true);
     definePageInfo(item);
   };
+
+  const onEmojiClick = (event, emojiObject) => {
+    console.log(emojiObject);
+    console.log(form.getFieldValue('title'));
+    console.log(form);
+    form.setFieldsValue(
+      form.getFieldValue('title') + emojiObject.emoji
+    );
+    setChosenEmoji(emojiObject);
+  };
+
+  const emojiContainerSelection = (
+    <div>
+      {chosenEmoji ? (
+        <span>You chose: {chosenEmoji.emoji}</span>
+      ) : (
+        <span>No emoji Chosen</span>
+      )}
+      <Picker onEmojiClick={onEmojiClick} />
+    </div>
+  );
+
+  const btnEmojiTooltip = (
+    <Popover content={emojiContainerSelection}>
+      <Button type="link">
+        <SmileOutlined />
+      </Button>
+    </Popover>
+  );
 
   return (
     <>
@@ -329,7 +364,7 @@ export default function Groups({ theme, t }) {
               },
             ]}
           >
-            <Input />
+            <Input  />
           </Form.Item>
           <Form.Item
             name="description"

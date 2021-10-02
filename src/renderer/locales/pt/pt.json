@@ -2,6 +2,17 @@
   "home": {
     "new_team": "Nova Equipe",
     "logout": "Terminar Sessão",
-    "settings": "Definições"
+    "settings": {
+      "setting": "Definições",
+      "general": "Geral",
+      "theme": {
+        "title": "Tema",
+        "light": "Claro",
+        "dark": "Escuro"
+      },
+      "application": {
+        "title": "Aplicação"
+      }
+    }
   }
 }

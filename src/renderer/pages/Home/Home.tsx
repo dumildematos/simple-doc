@@ -19,12 +19,8 @@ const DescriptionItem = ({ title, content }) => (
   </div>
 );
 
-const lngs = {
-  en: { nativeName: 'English' },
-  pt: { nativeName: 'Português' },
-};
 
-export default function Home({ theme }) {
+export default function Home({ theme, setTheme }) {
   const {
     isRouted,
     defineRoutedState,
@@ -88,7 +84,12 @@ export default function Home({ theme }) {
     <>
       <MainLayout theme={theme} isRouted={isRouted}>
         <Layout className="main-layout">
-          <Sidemenu t={t} collapse={collapse} />
+          <Sidemenu
+            t={t}
+            theme={theme}
+            setTheme={setTheme}
+            collapse={collapse}
+          />
           <Layout
             className="site-layout"
             style={{ padding: 0, background: 'inherit' }}

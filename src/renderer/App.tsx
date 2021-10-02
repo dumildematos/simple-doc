@@ -29,7 +29,7 @@ const LightTheme = {
 
   cardGroupBg: '#fff',
 
-  modalAddGroupBg: '#fff',
+  modalBg: '#fff',
   modalBgInput: '#fff',
   modalInputColor: '#000',
   modalInputBorder: '1px solid #f0f0f0',
@@ -42,21 +42,21 @@ const LightTheme = {
 };
 const DarkTheme = {
   boxBg: '#15181D',
-  bgContent: '#000000',
-  navBg: '#18191C',
-  siteLayoutContainer: '#232426',
+  bgContent: '#141414',
+  navBg: '#0A0A0A',
+  siteLayoutContainer: '#141414',
 
-  bgSidebar: '#4c5fe1',
+  bgSidebar: '#0A0A0A',
 
-  cardBg: '#232426',
+  cardBg: '#1F1F1F',
   cardBorderColor: '#232426',
   cardInnerBorderColor: '#2f3133',
   cardTexColor: '#bdbdbd',
 
   cardGroupBg: '#18191C',
 
-  modalAddGroupBg: '#18191C',
-  modalBgInput: '#111214',
+  modalBg: '#292929',
+  modalBgInput: '#1F1F1F',
   modalInputColor: '#bdbdbd',
   modalInputBorder: 'none',
 
@@ -90,7 +90,7 @@ export default function App() {
           <Switch>
             <Route exact path={['/index.html', '/', '/group/:id']}>
               {!isRouted && !editorOpened ? (
-                <Home theme={theme} />
+                <Home theme={theme} setTheme={setTheme} />
               ) : (
                 <Redirect to="/page-doc/:id" />
               )}
