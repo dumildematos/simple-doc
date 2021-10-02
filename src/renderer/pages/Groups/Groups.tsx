@@ -38,7 +38,7 @@ const ModalLayout = styled(Modal)`
     background: ${(props) => props.theme.modalBg};
     .ant-modal-header {
       background: ${(props) => props.theme.modalBg};
-      border-color: ${(props) => props.theme.cardInnerBorderColor};
+      border-color: ${(props) => props.theme.modalInnerBorderColor};
       .ant-modal-title {
         color: ${(props) => props.theme.modalInputColor} !important;
       }
@@ -54,7 +54,7 @@ const ModalLayout = styled(Modal)`
       }
     }
     .ant-modal-footer {
-      border-color: ${(props) => props.theme.cardInnerBorderColor};
+      border-color: ${(props) => props.theme.modalInnerBorderColor};
       button.ant-btn.ant-btn-primary {
         background-color: var(--purple-1);
         border: none;
@@ -364,7 +364,7 @@ export default function Groups({ theme, t }) {
               },
             ]}
           >
-            <Input  />
+            <Input />
           </Form.Item>
           <Form.Item
             name="description"

@@ -30,6 +30,7 @@ const LightTheme = {
   cardGroupBg: '#fff',
 
   modalBg: '#fff',
+  modalInnerBorderColor: '#f0f0f0',
   modalBgInput: '#fff',
   modalInputColor: '#000',
   modalInputBorder: '1px solid #f0f0f0',
@@ -56,6 +57,7 @@ const DarkTheme = {
   cardGroupBg: '#18191C',
 
   modalBg: '#292929',
+  modalInnerBorderColor: '#292929',
   modalBgInput: '#1F1F1F',
   modalInputColor: '#bdbdbd',
   modalInputBorder: 'none',

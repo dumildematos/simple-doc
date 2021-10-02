@@ -2,14 +2,43 @@ import React, { useState } from 'react';
 import { Button, Checkbox, Col, Modal, Radio, Row, Select, Tabs } from 'antd';
 import { AppleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
 const { TabPane } = Tabs;
 const { Option } = Select;
 
-const lngs = {
-  en: { nativeName: 'English' },
-  pt: { nativeName: 'Português' },
-};
+const ModalContainer = styled(Modal)`
+  .ant-modal-content {
+    background: ${(props) => props.theme.modalBg};
+    .ant-modal-header {
+      background: ${(props) => props.theme.modalBg};
+      border-color: ${(props) => props.theme.modalInnerBorderColor};
+      .ant-modal-title {
+        color: ${(props) => props.theme.modalInputColor} !important;
+      }
+    }
+    .ant-modal-body {
+      label {
+        color: ${(props) => props.theme.modalInputColor} !important;
+      }
+      .ant-input, .ant-select-selector {
+        background: ${(props) => props.theme.modalBgInput} !important;
+        border: ${(props) => props.theme.modalInputBorder};
+        color: ${(props) => props.theme.modalInputColor} !important;
+      }
+      .ant-select-dropdown {
+          background: red !important;
+      }
+    }
+    .ant-modal-footer {
+      border-color: ${(props) => props.theme.modalInnerBorderColor};
+      button.ant-btn.ant-btn-primary {
+        background-color: var(--purple-1);
+        border: none;
+      }
+    }
+  }
+`;
 
 export default function ModalSettings({
   t,
@@ -57,7 +86,7 @@ export default function ModalSettings({
   };
 
   return (
-    <Modal
+    <ModalContainer
       visible={settingModal.visible}
       title={t('home.settings.setting')}
       onOk={handleOk}
@@ -151,8 +180,8 @@ export default function ModalSettings({
                 style={{ width: 120 }}
                 onChange={handleChangeLanguage}
               >
-                <Option value="en">English</Option>
-                <Option value="pt">Português</Option>
+                <Option className="mdl-opt" value="en">English</Option>
+                <Option className="mdl-opt" value="pt">Português</Option>
               </Select>
             </Col>
           </Row>
@@ -164,6 +193,6 @@ export default function ModalSettings({
           Content of card tab 3
         </TabPane>
       </Tabs>
-    </Modal>
+    </ModalContainer>
   );
 }
