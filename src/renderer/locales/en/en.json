@@ -13,6 +13,8 @@
   },
 
   "home": {
-    "new_team": "New Team"
+    "new_team": "New Team",
+    "logout": "Logout",
+    "settings": "Settings"
   }
 }

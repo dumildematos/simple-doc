@@ -1,5 +1,7 @@
 {
   "home": {
-    "new_team": "Nova Equipe"
+    "new_team": "Nova Equipe",
+    "logout": "Terminar Sessão",
+    "settings": "Definições"
   }
 }

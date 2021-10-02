@@ -21,7 +21,7 @@ const DescriptionItem = ({ title, content }) => (
 
 const lngs = {
   en: { nativeName: 'English' },
-  de: { nativeName: 'Deutsch' },
+  pt: { nativeName: 'Português' },
 };
 
 export default function Home({ theme }) {
@@ -88,7 +88,7 @@ export default function Home({ theme }) {
     <>
       <MainLayout theme={theme} isRouted={isRouted}>
         <Layout className="main-layout">
-          <Sidemenu collapse={collapse} />
+          <Sidemenu t={t} collapse={collapse} />
           <Layout
             className="site-layout"
             style={{ padding: 0, background: 'inherit' }}
@@ -122,8 +122,6 @@ export default function Home({ theme }) {
                   // subTitle="This is a subtitle"
                 />
               )}
-              {t('description.part2')}
-
               {/* <div>
           {Object.keys(lngs).map((lng) => (
             <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => {
