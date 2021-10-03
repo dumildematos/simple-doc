@@ -74,7 +74,19 @@ const themes: any = {
   dark: DarkTheme,
 };
 
-const GlobalStyle = createGlobalStyle``;
+const GlobalStyle = createGlobalStyle`
+  .ant-select-dropdown {
+    background: ${(props) => themes[props.theme].modalBg} !important;
+    .ant-select-item{
+      &.ant-select-active{
+        background: ${(props) => themes[props.theme].modalBg} !important;
+      }
+      color: ${(props) => themes[props.theme].modalInputColor};
+      background: ${(props) => themes[props.theme].modalBg} !important;
+
+    }
+  }
+`;
 
 export default function App() {
   const { editorOpened, isRouted, theme } = useContext(MainContext);

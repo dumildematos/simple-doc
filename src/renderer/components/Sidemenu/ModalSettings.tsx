@@ -8,7 +8,11 @@ const { TabPane } = Tabs;
 const { Option } = Select;
 
 const ModalContainer = styled(Modal)`
+  .ant-modal {
+    height: 100% !important;
+  }
   .ant-modal-content {
+    height: 95% !important;
     background: ${(props) => props.theme.modalBg};
     .ant-modal-header {
       background: ${(props) => props.theme.modalBg};
@@ -21,13 +25,11 @@ const ModalContainer = styled(Modal)`
       label {
         color: ${(props) => props.theme.modalInputColor} !important;
       }
-      .ant-input, .ant-select-selector {
+      .ant-input,
+      .ant-select-selector {
         background: ${(props) => props.theme.modalBgInput} !important;
         border: ${(props) => props.theme.modalInputBorder};
         color: ${(props) => props.theme.modalInputColor} !important;
-      }
-      .ant-select-dropdown {
-          background: red !important;
       }
     }
     .ant-modal-footer {
@@ -38,7 +40,13 @@ const ModalContainer = styled(Modal)`
       }
     }
   }
+
 `;
+
+const optionsWithDisabled = [
+  { label: 'Light', value: 'light' },
+  { label: 'Dark', value: 'dark' },
+];
 
 export default function ModalSettings({
   t,
@@ -49,7 +57,7 @@ export default function ModalSettings({
 }) {
   const { i18n } = useTranslation();
   const [settingTheme, setSettingTheme] = useState({});
-
+  console.log(theme);
   const showModal = () => {
     setSettingModal({
       loading: false,
@@ -93,7 +101,7 @@ export default function ModalSettings({
       onCancel={handleCancel}
       footer={null}
       style={{
-        height: '100px',
+        height: '100%',
         top: '20px',
       }}
       width={1000}
@@ -114,8 +122,16 @@ export default function ModalSettings({
               <h4>{t('home.settings.theme.title')}</h4>
             </Col>
             <Col span={24}>
-              <Radio.Group value={theme} onChange={changeTheme}>
-                <Radio.Button value="light">
+              <Radio.Group
+                value={theme}
+                onChange={changeTheme}
+                optionType="button"
+                buttonStyle="solid"
+              >
+                <Radio.Button
+                  value="light"
+                  className={theme === 'light' ? 'active' : ''}
+                >
                   {t('home.settings.theme.light')}
                 </Radio.Button>
                 <Radio.Button value="dark">
@@ -180,8 +196,12 @@ export default function ModalSettings({
                 style={{ width: 120 }}
                 onChange={handleChangeLanguage}
               >
-                <Option className="mdl-opt" value="en">English</Option>
-                <Option className="mdl-opt" value="pt">Português</Option>
+                <Option className="mdl-opt" value="en">
+                  English
+                </Option>
+                <Option className="mdl-opt" value="pt">
+                  Português
+                </Option>
               </Select>
             </Col>
           </Row>
