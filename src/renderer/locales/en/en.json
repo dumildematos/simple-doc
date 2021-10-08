@@ -14,7 +14,10 @@
 
   "home": {
     "new_team": "New Team",
-    "logout": "Logout",
+    "user_dropdown_menu" : {
+      "profile":  "Profile",
+      "logout": "Terminar Sessão"
+    },
     "settings": {
       "setting": "Settings",
       "general": "Gerenal",

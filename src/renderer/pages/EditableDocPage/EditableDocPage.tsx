@@ -16,100 +16,110 @@ import {
   LeftOutlined,
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import Sidemenu from 'renderer/components/Sidemenu/Sidemenu';
 import { MainContext } from 'renderer/contexts/MainContext';
 import Chat from 'renderer/components/Chat/Chat';
+import MainLayout from 'renderer/components/MainLayout/MainLayout';
+import Editor, {
+  createEditorStateWithText,
+  composeDecorators,
+} from '@draft-js-plugins/editor';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import createInlineToolbarPlugin from '@draft-js-plugins/inline-toolbar';
+import createSideToolbarPlugin from '@draft-js-plugins/side-toolbar';
+import createImagePlugin from '@draft-js-plugins/image';
+
+import createAlignmentPlugin from '@draft-js-plugins/alignment';
+import createFocusPlugin from '@draft-js-plugins/focus';
+import createResizeablePlugin from '@draft-js-plugins/resizeable';
+import createBlockDndPlugin from '@draft-js-plugins/drag-n-drop';
+import createDragNDropUploadPlugin from '@draft-js-plugins/drag-n-drop-upload';
 
 const { Header, Content } = Layout;
 let inPage = false;
-const MainLayout = styled(Layout)`
-  height: 100vh;
-  padding: 0;
-  .trigger {
-    padding: 0 24px;
-    font-size: 18px;
-    line-height: 64px;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
 
-  .trigger:hover {
-    color: #1890ff;
-  }
+const inlineToolbarPlugin = createInlineToolbarPlugin();
+const { InlineToolbar } = inlineToolbarPlugin;
 
-  .logo {
-    height: 32px;
-    margin: 16px;
-    background: rgba(255, 255, 255, 0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .ant-avatar {
-      border: 1px solid var(--purple-1);
-    }
-    p {
-      margin: auto;
-      font-weight: bold;
-    }
-  }
+const sideToolbarPlugin = createSideToolbarPlugin();
+const { SideToolbar } = sideToolbarPlugin;
 
-  .ant-layout-sider-children {
-    background: var(--gray-1);
-  }
-  ul.ant-menu {
-    background: var(--gray-1);
-  }
-  section.ant-layout {
-    background: white;
-    ${!inPage ? `background: white` : `background: red`}
-  }
-  .site-layout .site-layout-background {
-    background: #fff;
-    height: 50px;
-    &.nav {
-      display: flex;
-      align-items: center;
-      .ant-page-header.site-page-header.ant-page-header-ghost.ant-page-header-compact {
-        height: 100%;
-        padding: 0;
-        display: flex;
-      }
-    }
-  }
+const focusPlugin = createFocusPlugin();
+const resizeablePlugin = createResizeablePlugin();
+const blockDndPlugin = createBlockDndPlugin();
+const alignmentPlugin = createAlignmentPlugin();
+const { AlignmentTool } = alignmentPlugin;
 
-  .ant-menu-vertical .ant-menu-item::after,
-  .ant-menu-vertical-left .ant-menu-item::after,
-  .ant-menu-vertical-right .ant-menu-item::after,
-  .ant-menu-inline .ant-menu-item::after {
-    border-right: 3px solid var(--purple-1) !important;
-  }
+const decorator = composeDecorators(
+  resizeablePlugin.decorator,
+  alignmentPlugin.decorator,
+  focusPlugin.decorator,
+  blockDndPlugin.decorator
+);
 
-  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-    background: var(--purple-2);
-    /* color: var(--purple-1); */
-  }
-  .ant-menu-submenu-title:hover {
-    .ant-menu-title-content,
-    svg,
-    i {
-      color: var(--purple-1);
-    }
-  }
-  .btn-action {
-    background: var(--purple-1);
-    border: none;
-    color: #fff;
-  }
-  .cards-container {
-    overflow-x: hidden;
-    overflow-y: scrool;
-    .ant-card {
-      cursor: pointer;
-      border-bottom: 2px solid var(--purple-1);
-    }
-  }
-`;
+const imagePlugin = createImagePlugin({ decorator });
+
+const dragNDropFileUploadPlugin = createDragNDropUploadPlugin({
+  handleUpload: null,
+  addImage: imagePlugin.addImage,
+});
+
+const plugins = [
+  inlineToolbarPlugin,
+  sideToolbarPlugin,
+  dragNDropFileUploadPlugin,
+  blockDndPlugin,
+  focusPlugin,
+  alignmentPlugin,
+  resizeablePlugin,
+  imagePlugin,
+];
+
+const initialState = {
+  entityMap: {
+    0: {
+      type: 'IMAGE',
+      mutability: 'IMMUTABLE',
+      data: {
+        src: 'https://i.gadgets360cdn.com/large/loki_tom_hiddleston_crop_1622797154582.jpg',
+      },
+    },
+  },
+  blocks: [
+    {
+      key: '9gm3s',
+      text: 'You can have images in your text field. This is a very rudimentary example, but you can enhance the image plugin with resizing, focus or alignment plugins.',
+      type: 'unstyled',
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
+      data: {},
+    },
+    {
+      key: 'ov7r',
+      text: ' ',
+      type: 'atomic',
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [
+        {
+          offset: 0,
+          length: 1,
+          key: 0,
+        },
+      ],
+      data: {},
+    },
+    {
+      key: 'e23a8',
+      text: 'See advanced examples further down …',
+      type: 'unstyled',
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
+      data: {},
+    },
+  ],
+};
 
 const DescriptionItem = ({ title, content }) => (
   <div className="site-description-item-profile-wrapper">
@@ -117,7 +127,7 @@ const DescriptionItem = ({ title, content }) => (
     {content}
   </div>
 );
-function EditableDocPage() {
+function EditableDocPage({ theme }) {
   const {
     isRouted,
     defineRoutedState,
@@ -135,6 +145,9 @@ function EditableDocPage() {
   const [collapse, setCollapse] = useState({
     collapsed: false,
   });
+  const [editor, setEditor] = useState({
+    editorState: EditorState.createWithContent(convertFromRaw(initialState)),
+  });
 
   const [detailGroup, setDatailGroup] = useState(false);
 
@@ -150,29 +163,23 @@ function EditableDocPage() {
     });
   };
 
-  const handleInputConfirm = () => {
-    const { inputValue } = hashes;
-    let { tags } = hashes;
-    if (inputValue && tags.indexOf(inputValue) === -1) {
-      tags = [...tags, inputValue];
-    }
-    console.log(tags);
-    setHash({
-      tags,
-      inputVisible: false,
-      inputValue: '',
-    });
-  };
-
-  const openGroup = (group: any) => {
-    console.log(group);
-  };
-
   const showDrawer = () => {
     defineDocSideBar(true);
   };
   const onCloseDrawer = () => {
     defineDocSideBar(false);
+  };
+
+  const onChangeText = (editorState: any) => {
+    // const value = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
+    setEditor({
+      editorState,
+    });
+    // const editorState = EditorState.createWithContent(contentState);
+    // const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
+    const rows = convertToRaw(editor.editorState.getCurrentContent());
+    const { blocks } = rows;
+    console.log(blocks);
   };
 
   return (
@@ -206,7 +213,7 @@ function EditableDocPage() {
                 definedEditorIsOpened(false);
                 history.push('/');
               }}
-              title={'Voltar'}
+              title="Documentalçao de acesso ao sistema"
               // subTitle="This is a subtitle"
             />
           </Header>
@@ -219,13 +226,21 @@ function EditableDocPage() {
               background: !isRouted ? 'inherit' : 'transparent',
             }}
           >
-            {editorOpened && (
-              <Affix style={{ position: 'absolute', top: '50%', right: '0' }}>
-                <Button type="primary" size="small" onClick={showDrawer}>
-                  <LeftOutlined />
-                </Button>
-              </Affix>
-            )}
+            <Editor
+              editorState={editor.editorState}
+              onChange={onChangeText}
+              placeholder="Tell your story..."
+              plugins={plugins}
+            />
+            <SideToolbar />
+            <InlineToolbar />
+            <AlignmentTool />
+
+            <Affix style={{ position: 'fixed', top: '50%', right: '0' }}>
+              <Button type="primary" size="small" onClick={showDrawer}>
+                <LeftOutlined />
+              </Button>
+            </Affix>
 
             <Drawer
               title="Basic Drawer"

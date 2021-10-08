@@ -12,17 +12,17 @@ import Login from './pages/Login/Login';
 import { MainContext, MainContextProvider } from './contexts/MainContext';
 import EditableDocPage from './pages/EditableDocPage/EditableDocPage';
 
-const hasValidToken = true;
 
 const LightTheme = {
   boxBg: '#D9E6F6',
   bgContent: 'red',
   navBg: '#fff',
+  navInputColor: '#000',
   siteLayoutContainer: 'inherit',
 
   bgSidebar: '#f7f6f3',
 
-  cardBg: 'inherit',
+  cardBg: '#fff',
   cardBorderColor: 'none',
   cardInnerBorderColor: 'none',
   cardTexColor: 'inherit',
@@ -45,6 +45,7 @@ const DarkTheme = {
   boxBg: '#15181D',
   bgContent: '#141414',
   navBg: '#0A0A0A',
+  navInputColor: '#bdbdbd',
   siteLayoutContainer: '#141414',
 
   bgSidebar: '#0A0A0A',
@@ -86,11 +87,23 @@ const GlobalStyle = createGlobalStyle`
 
     }
   }
+  ul.ant-dropdown-menu.ant-dropdown-menu-root.ant-dropdown-menu-vertical.ant-dropdown-menu-light {
+    background: ${(props) => themes[props.theme].modalBg} !important;
+    li{
+      &.ant-select-active{
+        background: ${(props) => themes[props.theme].modalBg} !important;
+      }
+      color: ${(props) => themes[props.theme].modalInputColor};
+      background: ${(props) => themes[props.theme].modalBg} !important;
+    }
+  }
 `;
 
 export default function App() {
   const { editorOpened, isRouted, theme } = useContext(MainContext);
   const [Apptheme, setTheme] = useState('light');
+  const hasValidToken = true;
+
   // console.log(isRouted);
   if (!hasValidToken) {
     return <Login />;
@@ -111,7 +124,9 @@ export default function App() {
             </Route>
             {/* {editorOpened && (
             )} */}
-            <Route path="/page-doc/:id" component={EditableDocPage} />
+            <Route path="/page-doc/:id">
+              <EditableDocPage theme={theme} />
+            </Route>
           </Switch>
         </Router>
       </ThemeProvider>

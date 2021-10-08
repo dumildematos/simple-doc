@@ -1,7 +1,10 @@
 {
   "home": {
     "new_team": "Nova Equipe",
-    "logout": "Terminar Sessão",
+    "user_dropdown_menu" : {
+      "profile":  "Perfil",
+      "logout": "Terminar Sessão"
+    },
     "settings": {
       "setting": "Definições",
       "general": "Geral",

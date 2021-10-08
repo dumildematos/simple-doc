@@ -199,15 +199,14 @@ export default function Groups({ theme, t }) {
       teamUrl: '/teste',
     },
   ];
+  const [teams, setTeams] = useState(teamArray);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [viewAs, setChangeView] = useState('grid');
   const [chosenEmoji, setChosenEmoji] = useState(null);
 
-
   useEffect(() => {
     // anchorRef();
   }, []);
-
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -227,6 +226,18 @@ export default function Groups({ theme, t }) {
 
   const onCreateGroup = (values: any) => {
     console.log(values);
+    const createdTeam = [
+      {
+        id: Math.floor(Math.random(10) * 1000),
+        title: values.title,
+        desc: values.description,
+        menbers: 0,
+        docs: 0,
+        teamUrl: '/teste',
+      },
+    ];
+    setTeams([...teams, ...createdTeam]);
+    teamArray.push();
     setIsModalVisible(false);
   };
 
@@ -240,9 +251,7 @@ export default function Groups({ theme, t }) {
     console.log(emojiObject);
     console.log(form.getFieldValue('title'));
     console.log(form);
-    form.setFieldsValue(
-      form.getFieldValue('title') + emojiObject.emoji
-    );
+    form.setFieldsValue(form.getFieldValue('title') + emojiObject.emoji);
     setChosenEmoji(emojiObject);
   };
 
@@ -295,9 +304,11 @@ export default function Groups({ theme, t }) {
         <Row
           className="cards-container"
           gutter={[8, 8]}
-          style={{ paddingTop: '10px' }}
+          style={{
+            paddingTop: '10px',
+          }}
         >
-          {teamArray.map((item, index) => (
+          {teams.map((item, index) => (
             <Col key={item.id} span={8}>
               <Link to={`/group/${item.id}`} onClick={() => setRoutState(item)}>
                 <Card
@@ -322,7 +333,7 @@ export default function Groups({ theme, t }) {
       {viewAs === 'list' && (
         <Row className="cards-container" style={{ paddingTop: '10px' }}>
           <Col span={24}>
-            <Table columns={tableColumns} dataSource={teamArray} />
+            <Table columns={tableColumns} dataSource={teams} />
           </Col>
         </Row>
       )}

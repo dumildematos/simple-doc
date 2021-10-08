@@ -92,7 +92,7 @@ export default function Home({ theme, setTheme }) {
           />
           <Layout
             className="site-layout"
-            style={{ padding: 0, background: 'inherit' }}
+            style={{ padding: 0 }}
           >
             <Header
               className="site-layout-background nav"

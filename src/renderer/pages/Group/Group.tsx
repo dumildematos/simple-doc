@@ -20,13 +20,22 @@ const GroupContainer = styled.div`
     }
     .ant-col {
       border-radius: 3px;
-      background: ${props => props.theme.cardGroupBg};
+      background: ${(props) => props.theme.cardBg};
       &.main {
         height: 100%;
       }
       padding: 12px;
       .btn-action-pmd {
         font-size: 1rem;
+        color: var(--purple-1);
+      }
+      h4,
+      h3,
+      p {
+        color: ${(props) => props.theme.cardTexColor} !important;
+      }
+      p {
+        font-size: 0.8rem;
       }
       .ant-avatar-group {
       }
@@ -73,7 +82,7 @@ function Group(props: any) {
         <Col span={8} className="main">
           <Row justify="space-between" style={{ height: 'auto' }}>
             <Col>
-              <h4>Detalhes da equipe</h4>
+              <h3>Detalhes da equipe</h3>
             </Col>
             <Col>
               <Button type="link" size="small" className="btn-action-pmd">
@@ -83,7 +92,7 @@ function Group(props: any) {
           </Row>
           <Row style={{ height: 'auto' }}>
             <Col span={24}>
-              <h3>Nome da eqiupe</h3>
+              <h4>Nome da eqiupe</h4>
             </Col>
             <Col span={24}>
               <p>

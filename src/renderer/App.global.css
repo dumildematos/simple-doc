@@ -3,6 +3,17 @@
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
 @import 'antd/dist/antd.css';
+@import 'draft-js/dist/Draft.css';
+@import '@draft-js-plugins/side-toolbar/lib/plugin.css';
+@import '@draft-js-plugins/inline-toolbar/lib/plugin.css';
+@import '@draft-js-plugins/image/lib/plugin.css';
+@import '@draft-js-plugins/alignment/lib/plugin.css';
+@import '@draft-js-plugins/focus/lib/plugin.css';
+@import '@draft-js-plugins/emoji/lib/plugin.css';
+
+
+
+
 @font-face {
   font-family: 'berlin-demi-bold';
   src: url(../../assets/fonts/Berlin-Sans-FB-Demi-Bold/Berlin-Sans-FB-Demi-Bold.ttf);
@@ -51,3 +62,29 @@ section.ant-layout.layout {
   background-color: #f7f7f7;
 }
 
+
+/* Override default */
+.Draftail-Toolbar {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Override default */
+.DraftEditor-root {
+  border: none !important;
+  width: 60% !important;
+  margin-top: 100px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  background-color: red;
+}
+
+/* Override default */
+.public-DraftEditor-content {
+  font-family: Georgia, "Times New Roman", Times, serif !important;
+}
+
+/* Override default */
+.public-DraftEditorPlaceholder-inner {
+  font-family: Georgia, "Times New Roman", Times, serif !important;
+}

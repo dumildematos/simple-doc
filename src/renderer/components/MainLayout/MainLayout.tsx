@@ -25,12 +25,14 @@ const MainLayout = styled.div`
   .logo {
     height: 32px;
     margin: 16px;
-    background: rgba(255, 255, 255, 0.3);
     display: flex;
     justify-content: center;
     align-items: center;
     .ant-avatar {
-      border: 1px solid var(--purple-1);
+      border: 1px solid;
+    }
+    a.ant-dropdown-trigger.ant-dropdown-link {
+      color: ${(props) => props.theme.modalInputColor};
     }
     p {
       margin: auto;
@@ -39,10 +41,22 @@ const MainLayout = styled.div`
   }
 
   .ant-layout-sider-children {
-    background: ${props => props.theme.bgSidebar};
+    background: ${(props) => props.theme.bgSidebar};
     ul.ant-menu {
-      background: ${props => props.theme.bgSidebar};
-      border-right-color: ${props => props.theme.bgSidebar};
+      background: ${(props) => props.theme.bgSidebar};
+      border-right-color: ${(props) => props.theme.bgSidebar};
+      color: ${(props) => props.theme.navInputColor};
+      li {
+        &:hover,
+        &:focus {
+          color: var(--purple-1);
+          background: transparent;
+        }
+        &.ant-menu-item.ant-menu-item-selected {
+          background: transparent;
+          color: var(--purple-1);
+        }
+      }
     }
   }
   section.ant-layout {
@@ -58,10 +72,16 @@ const MainLayout = styled.div`
         display: flex;
         align-items: center;
         background: ${(props) => props.theme.navBg};
+        .anticon {
+          color: ${(props) => props.theme.navInputColor};
+        }
         .ant-page-header.site-page-header.ant-page-header-ghost.ant-page-header-compact {
           height: 100%;
           padding: 0;
           display: flex;
+          .ant-page-header-heading-title {
+            color: ${(props) => props.theme.navInputColor};
+          }
         }
       }
     }

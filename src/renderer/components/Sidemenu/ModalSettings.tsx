@@ -31,6 +31,11 @@ const ModalContainer = styled(Modal)`
         border: ${(props) => props.theme.modalInputBorder};
         color: ${(props) => props.theme.modalInputColor} !important;
       }
+      .ant-tabs.ant-tabs-left.ant-tabs-small.ant-tabs-card {
+      }
+      .ant-tabs-content-holder {
+        border-color: ${(props) => props.theme.modalInnerBorderColor} !important;
+      }
     }
     .ant-modal-footer {
       border-color: ${(props) => props.theme.modalInnerBorderColor};

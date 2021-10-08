@@ -29,15 +29,7 @@ export default function Sidemenu({ collapse, t, setTheme, theme }) {
 
   const MenuDropDown = (
     <Menu onClick={userMenu}>
-      <Menu.Item key="1">
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.antgroup.com"
-        >
-          1st menu item
-        </a>
-      </Menu.Item>
+      <Menu.Item key="1">{t('home.user_dropdown_menu.profile')}</Menu.Item>
       <Menu.Item key="2" icon={<DownOutlined />} disabled>
         <a
           target="_blank"
@@ -56,10 +48,10 @@ export default function Sidemenu({ collapse, t, setTheme, theme }) {
           3rd menu item (disabled)
         </a>
       </Menu.Item>
-      <Menu.Item key="settings" icon={<SettingFilled />}>
+      <Menu.Item key="settings">
         {t('home.settings.setting')}
       </Menu.Item>
-      <Menu.Item key="logout">{t('home.logout')}</Menu.Item>
+      <Menu.Item key="logout">{t('home.user_dropdown_menu.profile')}</Menu.Item>
     </Menu>
   );
 
