@@ -39,8 +39,31 @@ import createFocusPlugin from '@draft-js-plugins/focus';
 import createResizeablePlugin from '@draft-js-plugins/resizeable';
 import createBlockDndPlugin from '@draft-js-plugins/drag-n-drop';
 import createDragNDropUploadPlugin from '@draft-js-plugins/drag-n-drop-upload';
-import menu from 'main/menu';
+import StateToPdfMake from 'draft-js-export-pdfmake';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts.js'
 
+// pdfMake.vfs = pdfFonts.pdfMake.vfs;
+// import robotoItalic from '../../../../assets/fonts/Roboto/Roboto-Italic.ttf';
+
+// const fonts = {
+//   Roboto: {
+//     normal: '../../../../assets/fonts/Roboto/Roboto-Italic.ttf',
+//     bold: '../../../../assets/fonts/Roboto/Roboto-Italic.ttf',
+//     italics: '../../../../assets/fonts/Roboto/Roboto-Italic.ttf',
+//     bolditalics: '../../../../assets/fonts/Roboto/Roboto-Italic.ttf',
+//   },
+// };
+// pdfFonts.pdfMake.vfs = fonts;
+// pdfMake.vfs = fonts;
+// pdfMake.vfs = {
+//   'Roboto-Italic.ttf': fonts.Roboto.italics,
+//   'Roboto-Medium.ttf': fonts.Roboto.italics,
+//   'Roboto-MediumItalic.ttf': fonts.Roboto.italics,
+//   'Roboto-Regular.ttf': fonts.Roboto.italics,
+// };
+console.log(pdfMake);
+console.log(pdfFonts);
 const { Header, Content } = Layout;
 let inPage = false;
 
@@ -189,6 +212,14 @@ function EditableDocPage({ theme }) {
     console.log(blocks);
   };
 
+  const handleGeneratePDF = () => {
+    const rawContent = convertToRaw(editor.editorState.getCurrentContent());
+    const stateToPdfMake = new StateToPdfMake(rawContent);
+    console.log(stateToPdfMake.generate());
+
+    pdfMake.createPdf(stateToPdfMake.generate()).download();
+  };
+
   const previewMenu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="1" icon={<UserOutlined />}>
@@ -242,7 +273,10 @@ function EditableDocPage({ theme }) {
               title="Documentalçao de acesso ao sistema"
               // subTitle="This is a subtitle"
             />
-            <div className="document-header-buttons" style={{ float: 'right', width: '100%' }}>
+            <div
+              className="document-header-buttons"
+              style={{ float: 'right', width: '100%' }}
+            >
               <Dropdown overlay={previewMenu} trigger={['click']}>
                 <a
                   className="ant-dropdown-link"
@@ -260,9 +294,13 @@ function EditableDocPage({ theme }) {
                 </a>
               </Dropdown>
               <a>
-                <Button type="link" icon={<EyeOutlined />} size="small" />
+                <Button
+                  type="link"
+                  icon={<EyeOutlined />}
+                  size="small"
+                  onClick={handleGeneratePDF}
+                />
               </a>
-
             </div>
           </Header>
           <Content

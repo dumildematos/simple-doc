@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Avatar, Button, Card, Col, Row, Tooltip } from 'antd';
+import React, { useContext, useState } from 'react';
+import { Avatar, Button, Card, Col, Modal, Row, Tooltip } from 'antd';
 import { Link, useHistory, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { BsPencil } from '@react-icons/all-files/bs/BsPencil';
@@ -69,6 +69,20 @@ function Group(props: any) {
 
   const history = useHistory();
 
+  const [isModalSelectTypeDoc, setIsModalSelectTypeDoc] = useState(false);
+
+  const modalSelecTypeHandleOk = () => {
+    setIsModalSelectTypeDoc(false);
+  };
+
+  const modalSelecTypeHandleCancel = () => {
+    setIsModalSelectTypeDoc(false);
+  };
+
+  const modalSelecTypeShowModal = () => {
+    setIsModalSelectTypeDoc(true);
+  };
+
   const openDocument = (id: number) => {
     // console.log(2);
     definedEditorIsOpened(true);
@@ -129,7 +143,12 @@ function Group(props: any) {
           <Row justify="space-between" style={{ height: 'auto' }}>
             <Col>{/* <h4>Detalhes da equipe</h4> */}</Col>
             <Col>
-              <Button type="link" size="small" className="btn-action-pmd">
+              <Button
+                type="link"
+                size="small"
+                className="btn-action-pmd"
+                onClick={modalSelecTypeShowModal}
+              >
                 <HiOutlineDocumentAdd />
               </Button>
             </Col>
@@ -148,6 +167,18 @@ function Group(props: any) {
           </Row>
         </Col>
       </Row>
+
+      <Modal
+        title="Basic Modal"
+        visible={isModalSelectTypeDoc}
+        onOk={modalSelecTypeHandleOk}
+        onCancel={modalSelecTypeHandleCancel}
+        footer={null}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
     </GroupContainer>
   );
 }
