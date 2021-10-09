@@ -15,6 +15,7 @@ import {
   Space,
   Table,
   Popover,
+  Pagination,
 } from 'antd';
 import {
   TeamOutlined,
@@ -328,6 +329,13 @@ export default function Groups({ theme, t }) {
               </Link>
             </Col>
           ))}
+        </Row>
+      )}
+      {viewAs === 'grid' && (
+        <Row>
+          <Col>
+            <Pagination defaultCurrent={1} total={50} />
+          </Col>
         </Row>
       )}
       {viewAs === 'list' && (

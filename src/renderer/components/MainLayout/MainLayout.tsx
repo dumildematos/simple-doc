@@ -83,6 +83,18 @@ const MainLayout = styled.div`
             color: ${(props) => props.theme.navInputColor};
           }
         }
+        .document-header-buttons {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+          align-items: flex-end;
+          .ant-dropdown-trigger {
+            text-transform: uppercase;
+          }
+          .btn-preview {
+            background-color: red;
+          }
+        }
       }
     }
   }

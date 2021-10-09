@@ -6,7 +6,9 @@ import {
   Col,
   Divider,
   Drawer,
+  Dropdown,
   Layout,
+  Menu,
   PageHeader,
   Row,
 } from 'antd';
@@ -14,6 +16,10 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   LeftOutlined,
+  DownOutlined,
+  UserOutlined,
+  DownloadOutlined,
+  EyeOutlined,
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { MainContext } from 'renderer/contexts/MainContext';
@@ -33,6 +39,7 @@ import createFocusPlugin from '@draft-js-plugins/focus';
 import createResizeablePlugin from '@draft-js-plugins/resizeable';
 import createBlockDndPlugin from '@draft-js-plugins/drag-n-drop';
 import createDragNDropUploadPlugin from '@draft-js-plugins/drag-n-drop-upload';
+import menu from 'main/menu';
 
 const { Header, Content } = Layout;
 let inPage = false;
@@ -182,18 +189,37 @@ function EditableDocPage({ theme }) {
     console.log(blocks);
   };
 
+  const previewMenu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="1" icon={<UserOutlined />}>
+        1st menu item
+      </Menu.Item>
+      <Menu.Item key="2" icon={<UserOutlined />}>
+        2nd menu item
+      </Menu.Item>
+      <Menu.Item key="3" icon={<UserOutlined />}>
+        3rd menu item
+      </Menu.Item>
+    </Menu>
+  );
+
+  const handleMenuClick = (e: any) => {
+    // message.info('Click on menu item.');
+    console.log('click', e);
+  };
+
   return (
     <>
       <MainLayout>
         <Layout
           className="site-layout"
-          style={{ padding: 0, background: 'inherit' }}
+          style={{ padding: 0, background: 'white', height: '100%' }}
         >
           <Header
             className="site-layout-background nav"
             style={{
               position: 'fixed',
-              zIndex: 1,
+              zIndex: 100,
               width: '100%',
               padding: 0,
             }}
@@ -216,13 +242,34 @@ function EditableDocPage({ theme }) {
               title="Documentalçao de acesso ao sistema"
               // subTitle="This is a subtitle"
             />
+            <div className="document-header-buttons" style={{ float: 'right', width: '100%' }}>
+              <Dropdown overlay={previewMenu} trigger={['click']}>
+                <a
+                  className="ant-dropdown-link"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Preview as <DownOutlined />
+                </a>
+              </Dropdown>
+              <Dropdown overlay={previewMenu} trigger={['click']}>
+                <a
+                  className="ant-dropdown-link"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Export as <DownOutlined />
+                </a>
+              </Dropdown>
+              <a>
+                <Button type="link" icon={<EyeOutlined />} size="small" />
+              </a>
+
+            </div>
           </Header>
           <Content
             className="site-layout-background"
             style={{
               margin: '60px 16px 15px 16px',
-              padding: !isRouted ? 24 : 0,
-              minHeight: 280,
+              height: '100%',
               background: !isRouted ? 'inherit' : 'transparent',
             }}
           >
