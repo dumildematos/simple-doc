@@ -87,3 +87,7 @@ section.ant-layout.layout {
 .public-DraftEditorPlaceholder-inner {
   font-family: Georgia, "Times New Roman", Times, serif !important;
 }
+
+.ant-pagination-item a {
+  display: unset !important;
+}

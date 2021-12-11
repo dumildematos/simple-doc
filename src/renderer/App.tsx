@@ -12,7 +12,6 @@ import Login from './pages/Login/Login';
 import { MainContext, MainContextProvider } from './contexts/MainContext';
 import EditableDocPage from './pages/EditableDocPage/EditableDocPage';
 
-
 const LightTheme = {
   boxBg: '#D9E6F6',
   bgContent: 'red',

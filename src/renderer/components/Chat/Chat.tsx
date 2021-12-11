@@ -38,6 +38,7 @@ export default function Chat() {
   });
 
   const handleSubmit = () => {
+    console.log(chatData);
     if (!chatData.value) {
       return;
     }

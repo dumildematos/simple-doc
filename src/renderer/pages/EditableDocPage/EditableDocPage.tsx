@@ -41,7 +41,7 @@ import createBlockDndPlugin from '@draft-js-plugins/drag-n-drop';
 import createDragNDropUploadPlugin from '@draft-js-plugins/drag-n-drop-upload';
 import StateToPdfMake from 'draft-js-export-pdfmake';
 import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts.js'
+import pdfFonts from 'pdfmake/build/vfs_fonts.js';
 
 // pdfMake.vfs = pdfFonts.pdfMake.vfs;
 // import robotoItalic from '../../../../assets/fonts/Roboto/Roboto-Italic.ttf';
@@ -239,6 +239,22 @@ function EditableDocPage({ theme }) {
     console.log('click', e);
   };
 
+  const handleExportAsMenuClick = (e: any) => {
+    // message.info('Click on menu item.');
+    console.log('click', e);
+    if (e.key === 'pdf') {
+      handleGeneratePDF();
+    }
+  };
+
+  const exportMenu = (
+    <Menu onClick={handleExportAsMenuClick}>
+      <Menu.Item key="pdf" icon={<UserOutlined />}>
+        PDF
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <>
       <MainLayout>
@@ -285,7 +301,7 @@ function EditableDocPage({ theme }) {
                   Preview as <DownOutlined />
                 </a>
               </Dropdown>
-              <Dropdown overlay={previewMenu} trigger={['click']}>
+              <Dropdown overlay={exportMenu} trigger={['click']}>
                 <a
                   className="ant-dropdown-link"
                   onClick={(e) => e.preventDefault()}
